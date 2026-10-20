@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4 meses contigo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #eee9f7;
+    --ink: #2b1f4a;
+    --soft: #6b5f8a;
+    --rose: #ff5c8a;
+    --gold: #f2b84b;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    font-family: "DM Sans", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    padding: 0 20px 80px;
+  }
+  main { max-width: 720px; margin: 0 auto; }
+ 
+  .hero { text-align: center; padding: 72px 0 40px; }
+  .hero h1 {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: clamp(2.6rem, 9vw, 4.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .hero p { color: var(--soft); margin-top: 14px; font-size: 1.05rem; }
+ 
+  .counter {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 36px 0 12px;
+  }
+  .counter div {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 18px;
+    padding: 18px 6px;
+    text-align: center;
+  }
+  .counter strong {
+    display: block;
+    font-family: "Fraunces", serif;
+    font-size: clamp(1.8rem, 7vw, 2.8rem);
+    line-height: 1;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+  }
+  .counter span { font-size: .85rem; opacity: .8; }
+  .since { text-align: center; color: var(--soft); font-size: .95rem; }
+ 
+  h2 {
+    font-family: "Fraunces", serif;
+    font-size: 1.7rem;
+    margin: 64px 0 6px;
+  }
+  .hint { color: var(--soft); margin-bottom: 20px; }
+ 
+  .months { display: grid; gap: 12px; }
+  .month {
+    background: var(--card);
+    border: 2px solid transparent;
+    border-radius: 18px;
+    padding: 18px 20px;
+    text-align: left;
+    width: 100%;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    transition: border-color .2s, transform .2s;
+  }
+  .month:hover { border-color: var(--rose); }
+  .month:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .month .head { display: flex; justify-content: space-between; align-items: center; font-weight: 500; }
+  .month .head em { font-style: normal; color: var(--rose); font-size: .9rem; }
+  .month .body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .35s ease;
+  }
+  .month .body p { overflow: hidden; color: var(--soft); }
+  .month.open .body { grid-template-rows: 1fr; }
+  .month.open .body p { padding-top: 12px; }
+ 
+  .letter {
+    background: var(--card);
+    border-radius: 22px;
+    padding: 28px 26px;
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.15rem;
+    line-height: 1.8;
+  }
+  .letter small { display: block; margin-top: 18px; font-style: normal; font-family: "DM Sans", sans-serif; color: var(--soft); }
+ 
+  .cta { text-align: center; margin-top: 48px; }
+  button.love {
+    background: var(--rose);
+    color: #fff;
+    border: 0;
+    border-radius: 999px;
+    padding: 16px 34px;
+    font: 500 1.05rem "DM Sans", sans-serif;
+    cursor: pointer;
+    transition: transform .15s;
+  }
+  button.love:active { transform: scale(.96); }
+  button.love:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+ 
+  .heart {
+    position: fixed;
+    bottom: -40px;
+    pointer-events: none;
+    animation: up 3s ease-in forwards;
+    z-index: 10;
+  }
+  @keyframes up { to { transform: translateY(-110vh) rotate(25deg); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .heart { animation-duration: .01s; }
+    .month .body { transition: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+ 
+  <section class="hero">
+    <h1 id="titulo">4 meses contigo</h1>
+    <p id="subtitulo">Para ti, con todo mi cariño.</p>
+    <div class="counter" aria-live="off">
+      <div><strong id="d">0</strong><span>días</span></div>
+      <div><strong id="h">0</strong><span>horas</span></div>
+      <div><strong id="m">0</strong><span>min</span></div>
+      <div><strong id="s">0</strong><span>seg</span></div>
+    </div>
+    <p class="since" id="desde"></p>
+  </section>
+ 
+  <section>
+    <h2>Mes a mes</h2>
+    <p class="hint">Toca cada mes para abrirlo.</p>
+    <div class="months" id="months"></div>
+  </section>
+ 
+  <section>
+    <h2>Lo que quiero decirte</h2>
+    <div class="letter">
+      <p id="carta"></p>
+      <small id="firma"></small>
+    </div>
+  </section>
+ 
+  <div class="cta">
+    <button class="love" id="btn">Sorpresa</button>
+  </div>
+ 
+</main>
+ 
+<script>
+  // ====== EDITA SOLO ESTO ======
+  const CONFIG = {
+    ella: "Isa",                      // su nombre
+    yo: "El amor de tu vida. ¡Feliz 4 meses, mi amor!", // firma
+    inicio: "2026-06-20T00:00:00",       // fecha en que empezaron (AAAA-MM-DDTHH:MM:SS)
+    meses: [
+      { titulo: "Mes 1", texto: "Recuerdo el día exacto en el que te vi con ese vestido de flores amarillas que te quedaba tan lindo que me gustaste con solo verte, y saber que ahora eres la persona con la que quiero pasar el resto de mi vida." },
+      { titulo: "Mes 2", texto: "Ya en este mes estábamos en Colombia. Cuando me dijiste que querías intentar las cosas conmigo, fui el hombre más feliz del mundo, y supe que contigo quería arriesgarlo todo." },
+      { titulo: "Mes 3", texto: "En este mes vivimos muchas cosas. Fue cuando te pedí que fueras mi novia, te celebré tu cumpleaños con mi familia y, al parecer, a tus abuelitos les caí bien. También hubo problemas, pero mira, los pudimos afrontar, y es lindo saber que ante las dificultades tú y yo podemos vencerlas juntos." },
+      { titulo: "Mes 4", texto: "Ya son 4 meses, amor, desde que te conocí, y quiero seguir haciéndolo. Quiero seguir enamorándote cada día que nos permita estar juntos, que espero sea por el resto de mi vida. Y en este cuarto mes, amor, espero que la pasemos muy bien los dos juntos." }
+    ],
+    carta: "Amor, para los próximos meses quiero que nos gocemos nuestra relación, que la disfrutemos y la cuidemos, para que dentro de muchos años podamos contar nuestra historia de amor.",
+    emoji: ["❤️", "💖", "✨", "🌹"]
+  };
+  // =============================
+ 
+  document.getElementById("titulo").textContent = `4 meses contigo, ${CONFIG.ella}`;
+  document.getElementById("carta").textContent = CONFIG.carta;
+  document.getElementById("firma").textContent = `— ${CONFIG.yo}`;
+ 
+  const inicio = new Date(CONFIG.inicio);
+  document.getElementById("desde").textContent =
+    "Desde el " + inicio.toLocaleDateString("es-CO", { day: "numeric", month: "long", year: "numeric" });
+ 
+  function tick() {
+    const diff = Math.max(0, Date.now() - inicio.getTime());
+    const sec = Math.floor(diff / 1000);
+    document.getElementById("d").textContent = Math.floor(sec / 86400);
+    document.getElementById("h").textContent = Math.floor(sec % 86400 / 3600);
+    document.getElementById("m").textContent = Math.floor(sec % 3600 / 60);
+    document.getElementById("s").textContent = sec % 60;
+  }
+  tick();
+  setInterval(tick, 1000);
+ 
+  const cont = document.getElementById("months");
+  CONFIG.meses.forEach(({ titulo, texto }) => {
+    const b = document.createElement("button");
+    b.className = "month";
+    b.setAttribute("aria-expanded", "false");
+    b.innerHTML = `<div class="head"><span></span><em>Abrir</em></div><div class="body"><p></p></div>`;
+    b.querySelector("span").textContent = titulo;
+    b.querySelector("p").textContent = texto;
+    b.addEventListener("click", () => {
+      const open = b.classList.toggle("open");
+      b.setAttribute("aria-expanded", open);
+      b.querySelector("em").textContent = open ? "Cerrar" : "Abrir";
+    });
+    cont.appendChild(b);
+  });
+ 
+  document.getElementById("btn").addEventListener("click", () => {
+    for (let i = 0; i < 30; i++) {
+      const h = document.createElement("span");
+      h.className = "heart";
+      h.textContent = CONFIG.emoji[Math.floor(Math.random() * CONFIG.emoji.length)];
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.fontSize = 18 + Math.random() * 28 + "px";
+      h.style.animationDelay = Math.random() * 0.8 + "s";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 4200);
+    }
+  });
+</script>
+</body>
+</html>
